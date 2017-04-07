@@ -30,7 +30,6 @@ NSString *const RNPHotoFrameworkErrorUnableToSave = @"RNPHOTOSFRAMEWORK_UNABLE_T
 {
     self = [super init];
     if (self) {
-        self.changeObserver = [[PHChangeObserver alloc] initWithEventEmitter:self];
     }
     return self;
 }
@@ -55,7 +54,9 @@ NSString *const RNPHotoFrameworkErrorUnableToSave = @"RNPHOTOSFRAMEWORK_UNABLE_T
 RCT_EXPORT_METHOD(startChangeObserving:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
-    self.changeObserver = [[PHChangeObserver alloc] initWithEventEmitter:self];
+    if (self.changeObserver == nil) {
+        self.changeObserver = [[PHChangeObserver alloc] initWithEventEmitter:self];
+    }
 }
 
 RCT_EXPORT_METHOD(authorizationStatus:(RCTPromiseResolveBlock)resolve
